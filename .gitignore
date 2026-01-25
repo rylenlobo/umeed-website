@@ -16,6 +16,9 @@
 # next.js
 /.next/
 /out/
+/.gemini
+/.agent
+/.agents
 
 # production
 /build
@@ -39,3 +42,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+*storybook.log
+storybook-static
