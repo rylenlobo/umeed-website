@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+
 import { 
   Users, 
   Home, 
@@ -12,9 +12,9 @@ import {
   GraduationCap, 
   HandHeart 
 } from "lucide-react";
-import { motion, useInView } from "motion/react";
+import { motion } from "motion/react";
+import { ImpactCard } from "./components/9.cta-section/impact-card";
 
-import { ImpactCard } from "@/components/screens/components/impact-card";
 
 
 const stats = [
