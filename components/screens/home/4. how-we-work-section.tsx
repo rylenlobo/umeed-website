@@ -1,13 +1,15 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { motion, stagger } from "motion/react";
+import { ArrowUpRight, CheckCircle2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 // Assets from Figma
-const imgGridItem4 = "http://localhost:3845/assets/35af9258fff1537f39d0f35d576120af04422292.png";
-const imgGridItem8 = "http://localhost:3845/assets/10bcc5cbc1f0f0d0dce6ae41c2f57f39fb589fb1.png";
-const imgGridItem9 = "http://localhost:3845/assets/2d337517380d633bebf454989f866008deabcb7a.png";
-const imgGridItem5 = "http://localhost:3845/assets/23bac9a8f6a6814981f5540c893a55828fc11932.png";
+const imgGridItem4 = "/assets/how-we-work-1.png";
+const imgGridItem8 = "/assets/how-we-work-2.png";
+const imgGridItem9 = "/assets/how-we-work-3.png";
+const imgGridItem5 = "/assets/how-we-work-4.png";
 
 // Updated variants for simpler fade animation
 const containerVariants = {
@@ -15,116 +17,177 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.15, // Stagger animations for children
+      staggerChildren: 0.1, // Stagger animations for children
     },
   },
 };
 
 const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" as const },
+  },
+};
+
+const imageVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { duration: 0.8, ease: "easeOut" as const },
+    transition: {
+      delayChildren: stagger(0.2, {
+        ease: "easeInOut",
+        startDelay: 0.5,
+      }),
+      duration: 1,
+    },
   },
 };
 
 export default function HowWeWorkSection() {
   return (
-    <section className="bg-[#fdf9fb] py-16 px-4 md:py-20 md:px-10 lg:py-36 lg:px-[120px] overflow-hidden">
-      <div className="max-w-[1440px] mx-auto flex flex-col items-center justify-center">
-        
-        {/* Mobile/Tablet Title: Visible only on smaller screens */}
-        <motion.h2 
-          className="text-primary font-serif text-3xl md:text-5xl font-bold leading-tight capitalize text-center mb-10 lg:hidden w-full"
+    <section className="bg-linear-to-b from-primary/10 via-10%-primary/5 via-20%-white to-white py-20 px-4 md:px-10 lg:py-32 lg:px-[120px] overflow-hidden relative">
+      <div className="max-w-7xl mx-auto flex flex-col items-center justify-center relative z-10">
+        {/* Mobile/Tablet Title */}
+        <motion.div
+          className="lg:hidden w-full mb-12 text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          How We Work?
-        </motion.h2>
+          <span className="text-primary text-sm font-bold tracking-widest uppercase mb-2 block">
+            Our Approach
+          </span>
+          <h2 className="text-4xl text-shadow-xs md:text-5xl font-serif font-bold text-foreground">
+            How We Work?
+          </h2>
+        </motion.div>
 
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-14 w-full items-center justify-center">
+        <motion.div
+          variants={imageVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="flex flex-col lg:flex-row gap-12 lg:gap-20 w-full items-center"
+        >
           {/* Left: Masonry Grid */}
-          <motion.div 
-            className="w-full lg:w-[692px] flex flex-col gap-6"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-          >
-            {/* 
-              Responsive structural change: 
-              Using flex layout on ALL screen sizes as per user request.
-              - Mobile/Tablet will now mirror the Desktop asymmetric layout.
-              - Using percentages for widths on smaller screens to maintain the ratio.
-            */}
-            
+          <div className="w-full lg:w-1/2 flex flex-col gap-6">
             {/* Row 1 */}
-            <motion.div className="flex flex-row gap-4 sm:gap-6 items-end w-full" variants={itemVariants}>
-              <div className="relative h-[158px] sm:h-[288px] w-[55%] lg:w-[387px] rounded-2xl overflow-hidden shrink-0">
-                <img 
-                  src={imgGridItem4} 
-                  alt="How we work 1" 
-                  className="absolute inset-0 size-full object-cover" 
+            <div className="flex flex-row gap-4 sm:gap-6 items-end w-full">
+              <motion.div
+                className="relative h-[180px] sm:h-[300px] w-1/2 rounded-2xl overflow-hidden shrink-0 group"
+                variants={imageVariants}
+              >
+                <img
+                  fetchPriority="high"
+                  src={imgGridItem4}
+                  alt="Grassroots Level"
+                  className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-              </div>
-              <div className="relative h-[158px] sm:h-[288px] flex-1 rounded-2xl overflow-hidden">
-                <img 
-                  src={imgGridItem8} 
-                  alt="How we work 2" 
-                  className="absolute inset-0 size-full object-cover scale-[1.5]" 
+                <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300" />
+              </motion.div>
+              <motion.div
+                className="relative h-[220px] sm:h-[340px] w-1/2 rounded-2xl overflow-hidden flex-1 group"
+                variants={imageVariants}
+              >
+                <img
+                  fetchPriority="high"
+                  src={imgGridItem8}
+                  alt="System Level"
+                  className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-              </div>
-            </motion.div>
+                <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300" />
+              </motion.div>
+            </div>
 
             {/* Row 2 */}
-            <motion.div className="flex flex-row gap-4 sm:gap-6 items-start w-full" variants={itemVariants}>
-              <div className="relative h-[158px] sm:h-[288px] w-[40%] lg:w-[280px] rounded-2xl overflow-hidden shrink-0">
-                <img 
-                  src={imgGridItem9} 
-                  alt="How we work 3" 
-                  className="absolute inset-0 size-full object-cover scale-[1.3]" 
+            <div className="flex flex-row gap-4 sm:gap-6 items-start w-full">
+              <motion.div
+                className="relative h-[220px] sm:h-[340px] w-[45%] rounded-2xl overflow-hidden shrink-0 group"
+                variants={imageVariants}
+              >
+                <img
+                  fetchPriority="high"
+                  src={imgGridItem9}
+                  alt="Skill Building"
+                  className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-              </div>
-              <div className="relative h-[158px] sm:h-[288px] flex-1 rounded-2xl overflow-hidden">
-                <img 
-                  src={imgGridItem5} 
-                  alt="How we work 4" 
-                  className="absolute inset-0 size-full object-cover scale-[1.2]" 
+                <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300" />
+              </motion.div>
+              <motion.div
+                className="relative h-[180px] sm:h-[300px] flex-1 rounded-2xl overflow-hidden group"
+                variants={imageVariants}
+              >
+                <img
+                  src={imgGridItem5}
+                  fetchPriority="high"
+                  alt="Empowerment"
+                  className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-              </div>
-            </motion.div>
-          </motion.div>
+                <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300" />
+              </motion.div>
+            </div>
+          </div>
 
           {/* Right: Text Content */}
-          <motion.div 
-            className="w-full lg:w-[452px] flex flex-col gap-8 items-center lg:items-start relative mt-6 lg:mt-0 text-center lg:text-left"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+          <motion.div
+            className="w-full lg:w-1/2 flex flex-col gap-8 lg:text-left text-center items-center lg:items-start"
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, ease: "easeIn" }}
             viewport={{ once: true }}
           >
-            <div className="flex flex-col gap-6 lg:gap-8 w-full">
-              {/* Desktop Title: Hidden on mobile */}
-              <h2 className="text-primary font-serif text-3xl md:text-4xl lg:text-5xl font-bold leading-tight capitalize hidden lg:block text-left">
-                How We Work?
-              </h2>
-              <div className="font-sans text-[#444444] text-base leading-relaxed text-justify max-w-[600px] lg:max-w-none mx-auto">
+            <div className="flex flex-col gap-6 w-full">
+              {/* Desktop Title */}
+              <div className="hidden lg:block">
+                <span className="text-primary text-sm font-bold tracking-widest uppercase mb-3 block">
+                  Our Approach
+                </span>
+                <h2 className="text-5xl lg:text-6xl font-serif font-bold text-foreground leading-tight">
+                  How We Work?
+                </h2>
+              </div>
+
+              <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
                 <p>
-                  We run skill building and empowerment programs both at a grassroots and system level that enable women with the knowledge to build their career and confidence to make and sustain their choices, while also fostering gender awareness and sensitivity for systems-level change.
+                  We run{" "}
+                  <span className="text-foreground font-medium">
+                    skill building and empowerment programs
+                  </span>{" "}
+                  both at a grassroots and system level.
                 </p>
+
+                <ul className="flex flex-col gap-4 text-left">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="w-6 h-6 text-primary shrink-0 mt-0.5" />
+                    <span>Enable women with knowledge to build careers.</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="w-6 h-6 text-primary shrink-0 mt-0.5" />
+                    <span>confidence to make and sustain their choices.</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="w-6 h-6 text-primary shrink-0 mt-0.5" />
+                    <span>
+                      Foster gender awareness for systems-level change.
+                    </span>
+                  </li>
+                </ul>
               </div>
             </div>
-            
-            <button className="bg-primary hover:bg-primary-hover transition-colors text-white font-sans font-medium text-base py-3 px-6 rounded-full flex items-center gap-2.5 group cursor-pointer">
-              <span>Learn More</span>
-              <div className="relative w-4 h-4 overflow-hidden">
-               <ArrowUpRight className="w-full h-full transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </div>
-            </button>
+            <Link href="/our-programs">
+              <Button
+                size="lg"
+                className="mt-4 bg-primary hover:bg-primary-hover hover:shadow-lg hover:shadow-primary/30 transition-all duration-300 text-white font-sans font-medium text-lg py-4 px-8 rounded-full flex items-center gap-3 group cursor-pointer"
+              >
+                <span>Explore Our Programs</span>
+                <ArrowUpRight className="w-5 h-5 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+              </Button>
+            </Link>
           </motion.div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
