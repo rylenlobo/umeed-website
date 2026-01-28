@@ -1,0 +1,111 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import { Heart, HandHeart } from "lucide-react";
+import { motion, stagger } from "motion/react";
+import Link from "next/link";
+
+
+
+const itemVariants = {
+  hidden: { y: 40, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      delayChildren: stagger(0.15, { ease: "easeOut" }),
+      duration: 0.6,
+    },
+  },
+};
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      duration: 0.4,
+    },
+  },
+};
+
+export default function SupportBanner() {
+  return (
+    <section className="relative w-full py-20 lg:py-24 overflow-hidden bg-primary/5">
+      {/* Background Image & Gradient */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src="/assets/f8dea032-b5ca-4498-acca-9001af9a044a.png" // Using the same placeholder/asset as CTA for now, as it fits the theme
+          alt="Support Our Mission"
+          className="object-cover w-full h-full object-top opacity-20"
+        />
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="absolute inset-0 bg-linear-to-r from-primary/90 via-primary/80 to-primary/60 mix-blend-multiply"
+        />
+      </div>
+
+      <motion.div
+        variants={itemVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        className="container mx-auto max-w-4xl px-4 relative z-10 flex flex-col items-center text-center"
+      >
+        <motion.div
+          variants={itemVariants}
+          className="mb-6 p-3 rounded-full bg-white/10 backdrop-blur-sm border border-white/20"
+        >
+          <Heart className="w-8 h-8 text-white fill-white/20" />
+        </motion.div>
+
+        <motion.h2
+          variants={itemVariants}
+          className="text-4xl md:text-5xl font-serif text-white mb-6 leading-tight"
+        >
+          Support Our Mission Today!
+        </motion.h2>
+
+        <motion.p
+          variants={itemVariants}
+          className="text-base sm:text-lg  text-white/90 mb-10 max-w-2xl font-light"
+        >
+          Your contribution can help women gain the skills, confidence, and
+          opportunity to succeed — turning potential into progress and progress
+          into empowerment.
+        </motion.p>
+
+        <div className="flex flex-col items-center gap-6 w-full">
+          <motion.div
+            variants={itemVariants}
+            className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
+          >
+            <Link href="/get-involved">
+              <Button
+                variant="outline"
+                size="lg"
+                shape="pill"
+                className="w-full bg-white text-primary border-white hover:bg-white/90 hover:text-primary h-12 px-8 sm:min-w-[160px] font-medium"
+              >
+                Volunteer
+              </Button>
+            </Link>
+
+            <Button
+              variant="outline"
+              size="lg"
+              shape="pill"
+              className="bg-transparent text-white hover:text-text-white border-white/60 hover:bg-white/10 hover:border-white h-12 px-8 sm:min-w-[160px] font-medium group"
+            >
+              Donate
+              <HandHeart className="w-4 h-4 ml-2 group-hover:scale-110 transition-transform" />
+            </Button>
+          </motion.div>
+        </div>
+      </motion.div>
+    </section>
+  );
+}

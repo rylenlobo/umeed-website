@@ -4,7 +4,11 @@ import { HeartHandshake, Venus } from 'lucide-react';
 
 export default function MainSection() {
   return (
-    <main className="h-[calc(100svh-100px)] lg:h-svh">
+    <main
+      className=" h-[calc(100svh-100px)]
+    lg:min-h-screen
+    lg:supports-[height:100svh]:min-h-svh"
+    >
       <HeroSection
         badgeText="Over 266+ women empowered since 2014"
         badgeIcon={<Venus className="size-5" />}
