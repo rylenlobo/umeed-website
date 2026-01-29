@@ -1,7 +1,7 @@
-"use client"
-import * as React from "react"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+"use client";
+import * as React from "react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import { ArrowUpRight, Sparkles, Heart } from "lucide-react";
 import { motion, stagger } from "motion/react";
 import Link from "next/link";
@@ -110,7 +110,7 @@ export default function MissionSection({
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.4, ease: "easeOut" }}
         viewport={{ once: true, margin: "-300px" }}
-        className="absolute w-full h-full inset-0 bg-linear-to-b from-primary/10 via-10%-primary/5 via-20%-white to-white pointer-events-none"
+        className="absolute w-full h-[20%]  sm:h-[17%] lg:h-[30%] inset-0 bg-linear-to-b from-primary/15 via-10%-primary/5 via-20%-white to-white pointer-events-none"
       />
 
       {/* Background Decorative Elements */}
@@ -169,7 +169,7 @@ export default function MissionSection({
         {/* Main Image */}
         <motion.div
           variants={variants}
-          className="w-full max-w-6xl rounded-3xl overflow-hidden drop-shadow-md "
+          className="w-full max-w-6xl rounded-4xl overflow-hidden drop-shadow-md "
         >
           <div className="aspect-[1/1.2] sm:aspect-video w-full bg-gray-200">
             <img

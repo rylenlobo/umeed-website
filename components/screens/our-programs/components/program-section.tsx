@@ -2,9 +2,8 @@
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Play, ArrowRight, User, Target, HandHeart, Trophy, Lightbulb, Users, Briefcase } from "lucide-react";
-import { motion, stagger } from "motion/react";
-import Link from "next/link";
+import { Play, ArrowRight } from "lucide-react";
+import { motion } from "motion/react";
 import React from "react";
 
 // --- Types ---
@@ -23,7 +22,7 @@ export interface ProgramStat {
 }
 
 export interface ProgramSectionProps {
-  id: string; 
+  id: string;
   title: string;
   subtitle: string;
   contentTitle?: string;
@@ -46,10 +45,15 @@ export interface ProgramSectionProps {
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
-  }
+    transition: {
+      type: "tween" as const,
+      duration: 0.6,
+      ease: "easeOut" as const,
+    },
+  },
 };
 
 const staggerContainer = {
@@ -57,19 +61,26 @@ const staggerContainer = {
   visible: {
     opacity: 1,
     transition: {
-      delayChildren: stagger(0.15, { ease: "easeOut" }),
-      duration: 0.6
-    }
-  }
+      staggerChildren: 0.15,
+      delayChildren: 0.1,
+      duration: 0.6,
+      ease: "easeOut" as const,
+    },
+  },
 };
 
 const scaleIn = {
   hidden: { opacity: 0, scale: 0.9, y: 20 },
-  visible: { 
-    opacity: 1, 
-    scale: 1, 
+  visible: {
+    opacity: 1,
+    scale: 1,
     y: 0,
-  }
+    transition: {
+      type: "tween" as const,
+      duration: 0.6,
+      ease: "easeOut" as const,
+    },
+  },
 };
 
 // --- Component ---
@@ -93,8 +104,6 @@ export function ProgramSection({
   reverse = false,
   className,
 }: ProgramSectionProps & { contentTitle?: string }) {
-  
-
   return (
     <section
       id={id}
@@ -139,7 +148,6 @@ export function ProgramSection({
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ type: "tween", duration: 0.6, ease: "easeOut" }}
               variants={staggerContainer}
             >
               {contentTitle && (
@@ -165,7 +173,6 @@ export function ProgramSection({
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ type: "tween", duration: 0.6, ease: "easeOut" }}
               variants={staggerContainer}
               className="pt-4"
             >
@@ -341,7 +348,6 @@ export function ProgramSection({
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ type: "tween", duration: 0.6, ease: "easeOut" }}
               variants={staggerContainer}
             >
               {stats.map((stat, i) => (
